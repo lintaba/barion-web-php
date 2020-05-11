@@ -1,4 +1,5 @@
 <?php
+namespace Barion\Helpers;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,22 +16,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class GiftCardPurchaseModel implements iBarionModel
+abstract class BarionModel
 {
-    public $Amount;
-    public $Count;
+    abstract public function fromJson($json);
 
-    function __construct()
+
+    /**
+     * Gets the value of the specified property from the json
+     *
+     * @param array  $json The json
+     * @param string $propertyName
+     *
+     * @return null The value of the property
+     */
+    protected function jget(array $json, $propertyName)
     {
-        $this->Amount = "";
-        $this->Count = 0;
+        return $json[$propertyName] ?? null;
     }
 
-    public function fromJson($json)
-    {
-        if (!empty($json)) {
-            $this->Amount = jget($json, 'Amount');
-            $this->Count = jget($json, 'Count');
-        }
-    }
 }

@@ -1,4 +1,5 @@
 <?php
+namespace Barion\Models\Payment;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -22,11 +23,11 @@ class PayeeTransactionModel
     public $Total;
     public $Comment;
 
-    function __construct()
+    public function __construct()
     {
         $this->POSTransactionId = "";
-        $this->Payee = "";
-        $this->Total = 0;
-        $this->Comment = "";
+        $this->Payee            = "";
+        $this->Total            = 0;
+        $this->Comment          = "";
     }
 }

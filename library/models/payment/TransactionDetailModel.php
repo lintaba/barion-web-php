@@ -1,4 +1,9 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Helpers\BarionModel;
+use Barion\Models\Common\ItemModel;
+use Barion\Models\Common\UserModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +20,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TransactionDetailModel implements iBarionModel
+class TransactionDetailModel extends BarionModel
 {
     public $TransactionId;
     public $POSTransactionId;
@@ -32,32 +37,32 @@ class TransactionDetailModel implements iBarionModel
     public $POSId;
     public $PaymentId;
 
-    function __construct()
+    public function __construct()
     {
-        $this->TransactionId = "";
+        $this->TransactionId    = "";
         $this->POSTransactionId = "";
-        $this->TransactionTime = "";
-        $this->Total = 0;
-        $this->Currency = "";
-        $this->Payer = new UserModel();
-        $this->Payee = new UserModel();
-        $this->Comment = "";
-        $this->Status = "";
-        $this->TransactionType = "";
-        $this->Items = array();
-        $this->RelatedId = "";
-        $this->POSId = "";
-        $this->PaymentId = "";
+        $this->TransactionTime  = "";
+        $this->Total            = 0;
+        $this->Currency         = "";
+        $this->Payer            = new UserModel();
+        $this->Payee            = new UserModel();
+        $this->Comment          = "";
+        $this->Status           = "";
+        $this->TransactionType  = "";
+        $this->Items            = [];
+        $this->RelatedId        = "";
+        $this->POSId            = "";
+        $this->PaymentId        = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->TransactionId = $json['TransactionId'];
+            $this->TransactionId    = $json['TransactionId'];
             $this->POSTransactionId = $json['POSTransactionId'];
-            $this->TransactionTime = $json['TransactionTime'];
-            $this->Total = $json['Total'];
-            $this->Currency = $json['Currency'];
+            $this->TransactionTime  = $json['TransactionTime'];
+            $this->Total            = $json['Total'];
+            $this->Currency         = $json['Currency'];
 
             $this->Payer = new UserModel();
             $this->Payer->fromJson($json['Payer']);
@@ -65,22 +70,22 @@ class TransactionDetailModel implements iBarionModel
             $this->Payee = new UserModel();
             $this->Payee->fromJson($json['Payee']);
 
-            $this->Comment = $json['Comment'];
-            $this->Status = $json['Status'];
+            $this->Comment         = $json['Comment'];
+            $this->Status          = $json['Status'];
             $this->TransactionType = $json['TransactionType'];
 
-            $this->Items = array();
+            $this->Items = [];
 
             if (!empty($json['Items'])) {
                 foreach ($json['Items'] as $i) {
                     $item = new ItemModel();
                     $item->fromJson($i);
-                    array_push($this->Items, $item);
+                    $this->Items[] = $item;
                 }
             }
 
             $this->RelatedId = $json['RelatedId'];
-            $this->POSId = $json['POSId'];
+            $this->POSId     = $json['POSId'];
             $this->PaymentId = $json['PaymentId'];
         }
     }

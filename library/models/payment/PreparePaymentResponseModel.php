@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseResponseModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class PreparePaymentResponseModel extends BaseResponseModel implements iBarionModel
+class PreparePaymentResponseModel extends BaseResponseModel
 {
     public $PaymentId;
     public $PaymentRequestId;
@@ -25,34 +28,35 @@ class PreparePaymentResponseModel extends BaseResponseModel implements iBarionMo
     public $RecurrenceResult;
     public $PaymentRedirectUrl;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->PaymentId = "";
-        $this->PaymentRequestId = "";
-        $this->Status = "";
-        $this->QRUrl = "";
-        $this->RecurrenceResult = "";
+        $this->PaymentId          = "";
+        $this->PaymentRequestId   = "";
+        $this->Status             = "";
+        $this->QRUrl              = "";
+        $this->RecurrenceResult   = "";
         $this->PaymentRedirectUrl = "";
-        $this->Transactions = array();
+        $this->Transactions       = [];
     }
 
-    public function fromJson($json)
+    public
+    function fromJson($json)
     {
         if (!empty($json)) {
             parent::fromJson($json);
-            $this->PaymentId = jget($json, 'PaymentId');
-            $this->PaymentRequestId = jget($json, 'PaymentRequestId');
-            $this->Status = jget($json, 'Status');
-            $this->QRUrl = jget($json, 'QRUrl');
-            $this->RecurrenceResult = jget($json, 'RecurrenceResult');
-            $this->Transactions = array();
+            $this->PaymentId        = $this->jget($json, 'PaymentId');
+            $this->PaymentRequestId = $this->jget($json, 'PaymentRequestId');
+            $this->Status           = $this->jget($json, 'Status');
+            $this->QRUrl            = $this->jget($json, 'QRUrl');
+            $this->RecurrenceResult = $this->jget($json, 'RecurrenceResult');
+            $this->Transactions     = [];
 
             if (!empty($json['Transactions'])) {
                 foreach ($json['Transactions'] as $key => $value) {
                     $tr = new TransactionResponseModel();
                     $tr->fromJson($value);
-                    array_push($this->Transactions, $tr);
+                    $this->Transactions[] = $tr;
                 }
             }
 

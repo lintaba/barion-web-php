@@ -1,4 +1,8 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseResponseModel;
+use Barion\Models\Common\FundingInformationModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +19,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class PaymentStateResponseModel extends BaseResponseModel implements iBarionModel
+class PaymentStateResponseModel extends BaseResponseModel
 {
     public $PaymentId;
     public $PaymentRequestId;
@@ -42,33 +46,33 @@ class PaymentStateResponseModel extends BaseResponseModel implements iBarionMode
     public $RedirectUrl;
     public $CallbackUrl;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->PaymentId = "";
-        $this->PaymentRequestId = "";
-        $this->OrderNumber = "";
-        $this->POSId = "";
-        $this->POSName = "";
-        $this->POSOwnerEmail = "";
-        $this->Status = "";
-        $this->PaymentType = "";
-        $this->FundingSource = "";
-        $this->FundingInformation = new FundingInformationModel();
+        $this->PaymentId             = "";
+        $this->PaymentRequestId      = "";
+        $this->OrderNumber           = "";
+        $this->POSId                 = "";
+        $this->POSName               = "";
+        $this->POSOwnerEmail         = "";
+        $this->Status                = "";
+        $this->PaymentType           = "";
+        $this->FundingSource         = "";
+        $this->FundingInformation    = new FundingInformationModel();
         $this->AllowedFundingSources = "";
-        $this->GuestCheckout = "";
-        $this->CreatedAt = "";
-        $this->ValidUntil = "";
-        $this->CompletedAt = "";
-        $this->ReservedUntil = "";
-        $this->Total = 0;
-        $this->Currency = "";
-        $this->Transactions = array();
-        $this->RecurrenceResult = "";
-        $this->SuggestedLocale ="";
-        $this->FraudRiskScore = 0;
-        $this->RedirectUrl = "";
-        $this->CallbackUrl = "";
+        $this->GuestCheckout         = "";
+        $this->CreatedAt             = "";
+        $this->ValidUntil            = "";
+        $this->CompletedAt           = "";
+        $this->ReservedUntil         = "";
+        $this->Total                 = 0;
+        $this->Currency              = "";
+        $this->Transactions          = [];
+        $this->RecurrenceResult      = "";
+        $this->SuggestedLocale       = "";
+        $this->FraudRiskScore        = 0;
+        $this->RedirectUrl           = "";
+        $this->CallbackUrl           = "";
     }
 
     public function fromJson($json)
@@ -76,40 +80,40 @@ class PaymentStateResponseModel extends BaseResponseModel implements iBarionMode
         if (!empty($json)) {
             parent::fromJson($json);
 
-            $this->PaymentId = jget($json, 'PaymentId');
-            $this->PaymentRequestId = jget($json, 'PaymentRequestId');
-            $this->OrderNumber = jget($json, 'OrderNumber');
-            $this->POSId = jget($json, 'POSId');
-            $this->POSName = jget($json, 'POSName');
-            $this->POSOwnerEmail = jget($json, 'POSOwnerEmail');
-            $this->Status = jget($json, 'Status');
-            $this->PaymentType = jget($json, 'PaymentType');
-            $this->FundingSource = jget($json, 'FundingSource');
-            if(!empty($json['FundingInformation'])) {
+            $this->PaymentId        = $this->jget($json, 'PaymentId');
+            $this->PaymentRequestId = $this->jget($json, 'PaymentRequestId');
+            $this->OrderNumber      = $this->jget($json, 'OrderNumber');
+            $this->POSId            = $this->jget($json, 'POSId');
+            $this->POSName          = $this->jget($json, 'POSName');
+            $this->POSOwnerEmail    = $this->jget($json, 'POSOwnerEmail');
+            $this->Status           = $this->jget($json, 'Status');
+            $this->PaymentType      = $this->jget($json, 'PaymentType');
+            $this->FundingSource    = $this->jget($json, 'FundingSource');
+            if (!empty($json['FundingInformation'])) {
                 $this->FundingInformation = new FundingInformationModel();
-                $this->FundingInformation->fromJson(jget($json, 'FundingInformation'));
+                $this->FundingInformation->fromJson($this->jget($json, 'FundingInformation'));
             }
-            $this->AllowedFundingSources = jget($json, 'AllowedFundingSources');
-            $this->GuestCheckout = jget($json, 'GuestCheckout');
-            $this->CreatedAt = jget($json, 'CreatedAt');
-            $this->ValidUntil = jget($json, 'ValidUntil');
-            $this->CompletedAt = jget($json, 'CompletedAt');
-            $this->ReservedUntil = jget($json, 'ReservedUntil');
-            $this->Total = jget($json, 'Total');
-            $this->Currency = jget($json, 'Currency');
-            $this->RecurrenceResult = jget($json, 'RecurrenceResult');
-            $this->SuggestedLocale = jget($json, 'SuggestedLocale');
-            $this->FraudRiskScore = jget($json, 'FraudRiskScore');
-            $this->RedirectUrl = jget($json, 'RedirectUrl');
-            $this->CallbackUrl = jget($json, 'CallbackUrl');
+            $this->AllowedFundingSources = $this->jget($json, 'AllowedFundingSources');
+            $this->GuestCheckout         = $this->jget($json, 'GuestCheckout');
+            $this->CreatedAt             = $this->jget($json, 'CreatedAt');
+            $this->ValidUntil            = $this->jget($json, 'ValidUntil');
+            $this->CompletedAt           = $this->jget($json, 'CompletedAt');
+            $this->ReservedUntil         = $this->jget($json, 'ReservedUntil');
+            $this->Total                 = $this->jget($json, 'Total');
+            $this->Currency              = $this->jget($json, 'Currency');
+            $this->RecurrenceResult      = $this->jget($json, 'RecurrenceResult');
+            $this->SuggestedLocale       = $this->jget($json, 'SuggestedLocale');
+            $this->FraudRiskScore        = $this->jget($json, 'FraudRiskScore');
+            $this->RedirectUrl           = $this->jget($json, 'RedirectUrl');
+            $this->CallbackUrl           = $this->jget($json, 'CallbackUrl');
 
-            $this->Transactions = array();
+            $this->Transactions = [];
 
             if (!empty($json['Transactions'])) {
                 foreach ($json['Transactions'] as $key => $value) {
                     $tr = new TransactionDetailModel();
                     $tr->fromJson($value);
-                    array_push($this->Transactions, $tr);
+                    $this->Transactions[] = $tr;
                 }
             }
 

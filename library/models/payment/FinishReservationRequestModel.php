@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseRequestModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -20,21 +23,21 @@ class FinishReservationRequestModel extends BaseRequestModel
     public $PaymentId;
     public $Transactions;
 
-    function __construct($paymentId)
+    public function __construct($paymentId)
     {
-        $this->PaymentId = $paymentId;
-        $this->Transactions = array();
+        $this->PaymentId    = $paymentId;
+        $this->Transactions = [];
     }
 
-    public function AddTransaction(TransactionToFinishModel $transaction)
+    public function AddTransaction(TransactionToFinishModel $transaction): void
     {
         if ($this->Transactions == null) {
-            $this->Transactions = array();
+            $this->Transactions = [];
         }
-        array_push($this->Transactions, $transaction);
+        $this->Transactions[] = $transaction;
     }
 
-    public function AddTransactions($transactions)
+    public function AddTransactions($transactions): void
     {
         if (!empty($transactions)) {
             foreach ($transactions as $transaction) {

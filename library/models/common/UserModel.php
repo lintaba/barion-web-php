@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Common;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,18 +18,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class UserModel implements iBarionModel
+class UserModel extends BarionModel
 {
     public $Name;
     public $Email;
 
-    function __construct()
+    public function __construct()
     {
-        $this->Name = "";
+        $this->Name  = "";
         $this->Email = "";
     }
 
-    function fromJson($json)
+    public function fromJson($json)
     {
         if (!empty($json)) {
             $this->Email = $json['Email'];

@@ -1,5 +1,9 @@
 <?php
 
+namespace Barion\Models;
+
+use Barion\Helpers\BarionModel;
+
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
  * <p/>
@@ -15,14 +19,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class BaseResponseModel
+class BaseResponseModel extends BarionModel
 {
     public $Errors;
     public $RequestSuccessful;
 
-    function __construct()
+    public function __construct()
     {
-        $this->Errors = array();
+        $this->Errors            = [];
         $this->RequestSuccessful = false;
     }
 
@@ -38,19 +42,19 @@ class BaseResponseModel
                 foreach ($json['Errors'] as $error) {
                     $apiError = new ApiErrorModel();
                     $apiError->fromJson($error);
-                    array_push($this->Errors, $apiError);
+                    $this->Errors[] = $apiError;
                 }
             } else {
-                $internalError = new ApiErrorModel();
+                $internalError            = new ApiErrorModel();
                 $internalError->ErrorCode = "500";
                 if (array_key_exists('ExceptionMessage', $json)) {
-                    $internalError->Title = $json['ExceptionMessage'];
+                    $internalError->Title       = $json['ExceptionMessage'];
                     $internalError->Description = $json['ExceptionType'];
                 } else {
                     $internalError->Title = "Internal Server Error";
                 }
 
-                array_push($this->Errors, $internalError);
+                $this->Errors[] = $internalError;
             }
         }
     }

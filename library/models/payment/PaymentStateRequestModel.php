@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseRequestModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -19,7 +22,7 @@ class PaymentStateRequestModel extends BaseRequestModel
 {
     public $PaymentId;
 
-    function __construct($paymentId)
+    public function __construct($paymentId)
     {
         $this->PaymentId = $paymentId;
     }

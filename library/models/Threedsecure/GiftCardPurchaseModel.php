@@ -1,8 +1,7 @@
 <?php
-namespace Barion\Models\Payment;
+namespace Barion\Models\Threedsecure;
 
-use Barion\Common\QRCodeSize;
-use Barion\Models\BaseRequestModel;
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -19,16 +18,22 @@ use Barion\Models\BaseRequestModel;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class PaymentQRRequestModel extends BaseRequestModel
+class GiftCardPurchaseModel extends BarionModel
 {
-    public $UserName;
-    public $Password;
-    public $PaymentId;
-    public $Size;
+    public $Amount;
+    public $Count;
 
-    public function __construct($paymentId)
+    public function __construct()
     {
-        $this->PaymentId = $paymentId;
-        $this->Size      = QRCodeSize::Normal;
+        $this->Amount = "";
+        $this->Count  = 0;
+    }
+
+    public function fromJson($json)
+    {
+        if (!empty($json)) {
+            $this->Amount = $this->jget($json, 'Amount');
+            $this->Count  = $this->jget($json, 'Count');
+        }
     }
 }

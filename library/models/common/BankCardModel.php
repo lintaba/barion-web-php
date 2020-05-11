@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Common;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,28 +18,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class BankCardModel implements iBarionModel
+class BankCardModel extends BarionModel
 {
     public $MaskedPan;
     public $BankCardType;
     public $ValidThruYear;
     public $ValidThruMonth;
 
-    function __construct()
+    public function __construct()
     {
-        $this->MaskedPan = "";
-        $this->BankCardType = "";
-        $this->ValidThruYear = "";
+        $this->MaskedPan      = "";
+        $this->BankCardType   = "";
+        $this->ValidThruYear  = "";
         $this->ValidThruMonth = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->MaskedPan = jget($json, 'MaskedPan');
-            $this->BankCardType = jget($json, 'BankCardType');
-            $this->ValidThruYear = jget($json, 'ValidThruYear');
-            $this->ValidThruMonth = jget($json, 'ValidThruMonth');
+            $this->MaskedPan      = $this->jget($json, 'MaskedPan');
+            $this->BankCardType   = $this->jget($json, 'BankCardType');
+            $this->ValidThruYear  = $this->jget($json, 'ValidThruYear');
+            $this->ValidThruMonth = $this->jget($json, 'ValidThruMonth');
         }
     }
 }

@@ -1,5 +1,9 @@
 <?php
 
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseRequestModel;
+
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
  * <p/>
@@ -19,7 +23,7 @@ class CancelAuthorizationRequestModel extends BaseRequestModel
 {
     public $PaymentId;
 
-    function __construct($paymentId)
+    public function __construct($paymentId)
     {
         $this->PaymentId = $paymentId;
     }

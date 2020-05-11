@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Refund;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class RefundedTransactionModel implements iBarionModel {
+class RefundedTransactionModel extends BarionModel
+{
 
     public $TransactionId;
     public $Total;
@@ -23,24 +27,24 @@ class RefundedTransactionModel implements iBarionModel {
     public $Comment;
     public $Status;
 
-    function __construct()
+    public function __construct()
     {
-        $this->TransactionId = "";
-        $this->Total = 0;
+        $this->TransactionId    = "";
+        $this->Total            = 0;
         $this->POSTransactionId = "";
-        $this->Comment = "";
-        $this->Status = "";
+        $this->Comment          = "";
+        $this->Status           = "";
     }
 
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->TransactionId = $json['TransactionId'];
-            $this->Total = $json['Total'];
+            $this->TransactionId    = $json['TransactionId'];
+            $this->Total            = $json['Total'];
             $this->POSTransactionId = $json['POSTransactionId'];
-            $this->Comment = $json['Comment'];
-            $this->Status = $json['Status'];
+            $this->Comment          = $json['Comment'];
+            $this->Status           = $json['Status'];
         }
     }
 }

@@ -1,4 +1,10 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Common\Currency;
+use Barion\Common\FundingSourceType;
+use Barion\Common\PaymentType;
+use Barion\Models\BaseRequestModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -44,30 +50,40 @@ class PreparePaymentRequestModel extends BaseRequestModel
     public $RecurrenceType;
     public $ChallengePreference;
 
-    function __construct($requestId = null, $type = PaymentType::Immediate, $guestCheckoutAllowed = true, $allowedFundingSources = array(FundingSourceType::All), $window = "00:30:00", $locale = "hu-HU", $initiateRecurrence = false, $recurrenceId = null, $redirectUrl = null, $callbackUrl = null, $currency = Currency::HUF)
-    {
-        $this->PaymentRequestId = $requestId;
-        $this->PaymentType = $type;
-        $this->PaymentWindow = $window;
-        $this->GuestCheckout = true;
-        $this->FundingSources = array(FundingSourceType::All);
-        $this->Locale = $locale;
+    public function __construct(
+        $requestId = null,
+        $type = PaymentType::Immediate,
+        $guestCheckoutAllowed = true,
+        $window = "00:30:00",
+        $locale = "hu-HU",
+        $initiateRecurrence = false,
+        $recurrenceId = null,
+        $redirectUrl = null,
+        $callbackUrl = null,
+        $currency = Currency::HUF
+    ) {
+        $this->PaymentRequestId   = $requestId;
+        $this->PaymentType        = $type;
+        $this->PaymentWindow      = $window;
+        $this->GuestCheckout      = true;
+        $this->FundingSources     = [FundingSourceType::All];
+        $this->Locale             = $locale;
         $this->InitiateRecurrence = $initiateRecurrence;
-        $this->RecurrenceId = $recurrenceId;
-        $this->RedirectUrl = $redirectUrl;
-        $this->CallbackUrl = $callbackUrl;
-        $this->Currency = $currency;
+        $this->RecurrenceId       = $recurrenceId;
+        $this->RedirectUrl        = $redirectUrl;
+        $this->CallbackUrl        = $callbackUrl;
+        $this->Currency           = $currency;
     }
 
-    public function AddTransaction(PaymentTransactionModel $transaction)
+    public function AddTransaction(PaymentTransactionModel $transaction): void
     {
         if ($this->Transactions == null) {
-            $this->Transactions = array();
+            $this->Transactions = [];
         }
-        array_push($this->Transactions, $transaction);
+        $this->Transactions[] = $transaction;
     }
 
-    public function AddTransactions($transactions)
+    public function AddTransactions($transactions): void
     {
         if (!empty($transactions)) {
             foreach ($transactions as $transaction) {

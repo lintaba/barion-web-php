@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Threedsecure;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class ShippingAddressModel implements iBarionModel
+class BillingAddressModel extends BarionModel
 {
     public $Country;
     public $Region;
@@ -24,31 +27,28 @@ class ShippingAddressModel implements iBarionModel
     public $Street;
     public $Street2;
     public $Street3;
-    public $FullName;
 
-    function __construct()
+    public function __construct()
     {
         $this->Country = "";
-        $this->Region = "";
-        $this->City = "";
-        $this->Zip = "";
-        $this->Street = "";
+        $this->Region  = "";
+        $this->City    = "";
+        $this->Zip     = "";
+        $this->Street  = "";
         $this->Street2 = "";
         $this->Street3 = "";
-        $this->FullName = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->Country = jget($json, 'Country');
-            $this->Region = jget($json, 'Region');
-            $this->City = jget($json, 'City');
-            $this->Zip = jget($json, 'Zip');
-            $this->Street = jget($json, 'Street');
-            $this->Street2 = jget($json, 'Street2');
-            $this->Street3 = jget($json, 'Street3');
-            $this->FullName = jget($json, 'FullName');
+            $this->Country = $this->jget($json, 'Country');
+            $this->Region  = $this->jget($json, 'Region');
+            $this->City    = $this->jget($json, 'City');
+            $this->Zip     = $this->jget($json, 'Zip');
+            $this->Street  = $this->jget($json, 'Street');
+            $this->Street2 = $this->jget($json, 'Street2');
+            $this->Street3 = $this->jget($json, 'Street3');
         }
     }
 }

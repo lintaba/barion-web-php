@@ -1,4 +1,9 @@
 <?php
+namespace Barion\Models\Refund;
+
+use Barion\Models\BaseRequestModel;
+use Barion\Models\Payment\TransactionToRefundModel;
+use Barion\Models\Payment\TransactionToRefundModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -20,20 +25,20 @@ class RefundRequestModel extends BaseRequestModel
     public $PaymentId;
     public $TransactionsToRefund;
 
-    function __construct($paymentId)
+    public function __construct($paymentId)
     {
         $this->PaymentId = $paymentId;
     }
 
-    public function AddTransaction(TransactionToRefundModel $transaction)
+    public function AddTransaction(TransactionToRefundModel $transaction): void
     {
         if ($this->TransactionsToRefund == null) {
-            $this->TransactionsToRefund = array();
+            $this->TransactionsToRefund = [];
         }
-        array_push($this->TransactionsToRefund, $transaction);
+        $this->TransactionsToRefund[] = $transaction;
     }
 
-    public function AddTransactions($transactions)
+    public function AddTransactions($transactions): void
     {
         if (!empty($transactions)) {
             foreach ($transactions as $transaction) {

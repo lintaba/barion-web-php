@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Common;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,14 +18,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class FundingInformationModel implements iBarionModel
+class FundingInformationModel extends BarionModel
 {
     public $BankCard;
     public $AuthorizationCode;
 
-    function __construct()
+    public function __construct()
     {
-        $this->BankCard = new BankCardModel();
+        $this->BankCard          = new BankCardModel();
         $this->AuthorizationCode = "";
     }
 
@@ -30,8 +33,8 @@ class FundingInformationModel implements iBarionModel
     {
         if (!empty($json)) {
             $this->BankCard = new BankCardModel();
-            $this->BankCard->fromJson(jget($json, 'BankCard'));
-            $this->AuthorizationCode = jget($json, 'AuthorizationCode');
+            $this->BankCard->fromJson($this->jget($json, 'BankCard'));
+            $this->AuthorizationCode = $this->jget($json, 'AuthorizationCode');
         }
     }
 }

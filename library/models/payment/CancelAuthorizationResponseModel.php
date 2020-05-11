@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\BaseResponseModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class CancelAuthorizationResponseModel extends BaseResponseModel implements iBarionModel
+class CancelAuthorizationResponseModel extends BaseResponseModel
 {
     public $IsSuccessful;
     public $PaymentId;
@@ -23,14 +26,14 @@ class CancelAuthorizationResponseModel extends BaseResponseModel implements iBar
     public $Status;
     public $Transactions;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
-        $this->IsSuccessful = false;
-        $this->PaymentId = "";
+        $this->IsSuccessful     = false;
+        $this->PaymentId        = "";
         $this->PaymentRequestId = "";
-        $this->Status = "";
-        $this->Transactions = array();
+        $this->Status           = "";
+        $this->Transactions     = [];
     }
 
     public function fromJson($json)
@@ -38,18 +41,18 @@ class CancelAuthorizationResponseModel extends BaseResponseModel implements iBar
         if (!empty($json)) {
             parent::fromJson($json);
 
-            $this->IsSuccessful = jget($json, 'IsSuccessful');
-            $this->PaymentId = jget($json, 'PaymentId');
-            $this->PaymentRequestId = jget($json, 'PaymentRequestId');
-            $this->Status = jget($json, 'Status');
+            $this->IsSuccessful     = $this->jget($json, 'IsSuccessful');
+            $this->PaymentId        = $this->jget($json, 'PaymentId');
+            $this->PaymentRequestId = $this->jget($json, 'PaymentRequestId');
+            $this->Status           = $this->jget($json, 'Status');
 
-            $this->Transactions = array();
+            $this->Transactions = [];
 
             if (!empty($json['Transactions'])) {
                 foreach ($json['Transactions'] as $key => $value) {
                     $tr = new TransactionResponseModel();
                     $tr->fromJson($value);
-                    array_push($this->Transactions, $tr);
+                    $this->Transactions[] = $tr;
                 }
             }
         }

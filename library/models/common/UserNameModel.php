@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Common;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,27 +18,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class UserNameModel implements iBarionModel
+class UserNameModel extends BarionModel
 {
     public $LoginName;
     public $FirstName;
     public $LastName;
     public $OrganizationName;
 
-    function __construct()
+    public function __construct()
     {
-        $this->LoginName = "";
-        $this->FirstName = "";
-        $this->LastName = "";
+        $this->LoginName        = "";
+        $this->FirstName        = "";
+        $this->LastName         = "";
         $this->OrganizationName = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->LoginName = $json['LoginName'];
-            $this->FirstName = $json['FirstName'];
-            $this->LastName = $json['LastName'];
+            $this->LoginName        = $json['LoginName'];
+            $this->FirstName        = $json['FirstName'];
+            $this->LastName         = $json['LastName'];
             $this->OrganizationName = $json['OrganizationName'];
         }
     }

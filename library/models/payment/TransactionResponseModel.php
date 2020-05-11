@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class TransactionResponseModel implements iBarionModel
+class TransactionResponseModel extends BarionModel
 {
     public $POSTransactionId;
     public $TransactionId;
@@ -23,23 +26,23 @@ class TransactionResponseModel implements iBarionModel
     public $TransactionTime;
     public $RelatedId;
 
-    function __construct()
+    public function __construct()
     {
         $this->POSTransactionId = "";
-        $this->TransactionId = "";
-        $this->Status = "";
-        $this->TransactionTime = "";
-        $this->RelatedId = "";
+        $this->TransactionId    = "";
+        $this->Status           = "";
+        $this->TransactionTime  = "";
+        $this->RelatedId        = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
             $this->POSTransactionId = $json['POSTransactionId'];
-            $this->Status = $json['Status'];
-            $this->TransactionId = $json['TransactionId'];
-            $this->TransactionTime = $json['TransactionTime'];
-            $this->RelatedId = $json['RelatedId'];
+            $this->Status           = $json['Status'];
+            $this->TransactionId    = $json['TransactionId'];
+            $this->TransactionTime  = $json['TransactionTime'];
+            $this->RelatedId        = $json['RelatedId'];
         }
     }
 }

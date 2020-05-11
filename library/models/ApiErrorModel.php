@@ -1,5 +1,7 @@
 <?php
 
+namespace Barion\Models;
+
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
  * <p/>
@@ -21,18 +23,18 @@ class ApiErrorModel
     public $Title;
     public $Description;
 
-    function __construct()
+    public function __construct()
     {
-        $this->ErrorCode = "";
-        $this->Title = "";
+        $this->ErrorCode   = "";
+        $this->Title       = "";
         $this->Description = "";
     }
 
-    public function fromJson($json)
+    public function fromJson($json): void
     {
         if (!empty($json)) {
-            $this->ErrorCode = $json['ErrorCode'];
-            $this->Title = $json['Title'];
+            $this->ErrorCode   = $json['ErrorCode'];
+            $this->Title       = $json['Title'];
             $this->Description = $json['Description'];
         }
     }

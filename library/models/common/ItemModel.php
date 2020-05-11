@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Common;
+
+use Barion\Helpers\BarionModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -15,7 +18,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-class ItemModel implements iBarionModel
+class ItemModel extends BarionModel
 {
     public $Name;
     public $Description;
@@ -25,27 +28,27 @@ class ItemModel implements iBarionModel
     public $ItemTotal;
     public $SKU;
 
-    function __construct()
+    public function __construct()
     {
-        $this->Name = "";
+        $this->Name        = "";
         $this->Description = "";
-        $this->Quantity = 0;
-        $this->Unit = "";
-        $this->UnitPrice = 0;
-        $this->ItemTotal = 0;
-        $this->SKU = "";
+        $this->Quantity    = 0;
+        $this->Unit        = "";
+        $this->UnitPrice   = 0;
+        $this->ItemTotal   = 0;
+        $this->SKU         = "";
     }
 
     public function fromJson($json)
     {
         if (!empty($json)) {
-            $this->Name = jget($json, 'Name');
-            $this->Description = jget($json, 'Description');
-            $this->Quantity = jget($json, 'Quantity');
-            $this->Unit = jget($json, 'Unit');
-            $this->UnitPrice = jget($json, 'UnitPrice');
-            $this->ItemTotal = jget($json, 'ItemTotal');
-            $this->SKU = jget($json, 'SKU');
+            $this->Name        = $this->jget($json, 'Name');
+            $this->Description = $this->jget($json, 'Description');
+            $this->Quantity    = $this->jget($json, 'Quantity');
+            $this->Unit        = $this->jget($json, 'Unit');
+            $this->UnitPrice   = $this->jget($json, 'UnitPrice');
+            $this->ItemTotal   = $this->jget($json, 'ItemTotal');
+            $this->SKU         = $this->jget($json, 'SKU');
         }
     }
 }

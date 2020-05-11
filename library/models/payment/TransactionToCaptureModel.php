@@ -1,4 +1,7 @@
 <?php
+namespace Barion\Models\Payment;
+
+use Barion\Models\Common\ItemModel;
 
 /**
  * Copyright 2016 Barion Payment Inc. All Rights Reserved.
@@ -23,24 +26,24 @@ class TransactionToCaptureModel
     public $Items;
     public $Comment;
 
-    function __construct()
+    public function __construct()
     {
-        $this->TransactionId = "";
-        $this->Total = 0;
-        $this->PayeeTransactions = array();
-        $this->Comment = "";
-        $this->Items = array();
+        $this->TransactionId     = "";
+        $this->Total             = 0;
+        $this->PayeeTransactions = [];
+        $this->Comment           = "";
+        $this->Items             = [];
     }
 
-    public function AddItem(ItemModel $item)
+    public function AddItem(ItemModel $item): void
     {
         if ($this->Items == null) {
-            $this->Items = array();
+            $this->Items = [];
         }
-        array_push($this->Items, $item);
+        $this->Items[] = $item;
     }
 
-    public function AddItems($items)
+    public function AddItems($items): void
     {
         if (!empty($items)) {
             foreach ($items as $item) {
@@ -50,16 +53,16 @@ class TransactionToCaptureModel
             }
         }
     }
-    
-    public function AddPayeeTransaction(PayeeTransactionToFinishModel $model)
+
+    public function AddPayeeTransaction(PayeeTransactionToFinishModel $model): void
     {
         if ($this->PayeeTransactions == null) {
-            $this->PayeeTransactions = array();
+            $this->PayeeTransactions = [];
         }
-        array_push($this->PayeeTransactions, $model);
+        $this->PayeeTransactions[] = $model;
     }
 
-    public function AddPayeeTransactions($transactions)
+    public function AddPayeeTransactions($transactions): void
     {
         if (!empty($transactions)) {
             foreach ($transactions as $transaction) {
